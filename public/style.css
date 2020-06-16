@@ -1,0 +1,17 @@
+.text-field {
+    padding: 8px;
+    border-radius: 5px;
+    width: 50%;
+    font-weight: bold;
+}
+
+.button {
+    padding: 8px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.button:hover {
+    background-color: grey;
+    color: white;
+}
