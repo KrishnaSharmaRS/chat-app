@@ -1,9 +1,6 @@
 const users = []
 
 const addUser = ({ id, username, room }) => {
-    // Clean the Provided Data:-
-    username = username
-    room = room
 
     // Validate the Given Data:-
     if (!username || !room) {
@@ -14,7 +11,7 @@ const addUser = ({ id, username, room }) => {
 
     // Checking the Existing User:-
     const existingUser = users.find(user => {
-        return user.room.toLowerCase() === room.toLowerCase() 
+        return user.room === room
         &&
         user.username.toLowerCase() === username.toLowerCase();
     })
@@ -42,7 +39,7 @@ const getUser = (id) => {
 }
 
 const getUsersInRoom = (room) => {
-    return users.filter(user => user.room.toLowerCase() === room.toLowerCase());
+    return users.filter(user => user.room === room);
 }
 
 module.exports = {

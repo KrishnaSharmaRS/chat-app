@@ -21,26 +21,35 @@ io.on('connection', (socket) => {
 
     
     socket.on('join', ({ username, room }, callback) => {
-        const { error, user } = addUser({ id: socket.id, username: username.trim(), room: room.trim() });
+        const { error, user } = addUser({ id: socket.id, username: username.trim(), room: room.trim().toLowerCase() });
 
         if (error) return callback(error)
 
         socket.join(user.room)
 
-        socket.emit('message', generateMessage('Welcome!'))
-        socket.broadcast.to(user.room).emit('message', generateMessage(`${user.username} has joined this Room.`))
-
+        socket.emit('message', generateMessage('ADMINISTRATOR', `Welcome ${user.username}`))
+        socket.broadcast.to(user.room).emit('message', generateMessage('ADMINISTRATOR', `'${user.username}' joined this Room.`))
+        io.to(user.room).emit('roomData', {
+            room: user.room,
+            users: getUsersInRoom(user.room)
+        })
         callback()
     } )
 
     socket.on('sendMessage', (message, callback) => {
-        io.emit('message', generateMessage(message))
+        const user = getUser(socket.id)
+        // const filter = new Filter()
+
+        // if (filter.isProfane(message)) return callback("Profanity is not Allowed!")
+
+        io.to(user.room).emit('message', generateMessage(user.username, message))
 
         callback('Delivered')
     })
 
     socket.on('sendLocation', ({ latitude, longitude }, callback) => {
-        io.emit('locationMessage', generateLocationMessage(`https://google.com/maps?q=${latitude},${longitude}`))
+        const user = getUser(socket.id);
+        io.to(user.room).emit('locationMessage', generateLocationMessage(user.username, `https://google.com/maps?q=${latitude},${longitude}`))
 
         callback('Delivered')
     })
@@ -49,7 +58,11 @@ io.on('connection', (socket) => {
         const user = removeUser(socket.id)
 
         if (user) {
-            io.to(user.room).emit('message', generateMessage(`${user.username} has LEFT!`))
+            io.to(user.room).emit('message', generateMessage(user.username, `Bye everyone, I'm Leaving this Room!`))
+            io.to(user.room).emit('roomData', {
+                room: user.room,
+                users: getUsersInRoom(user.room)
+            })
         }
     })
 })
