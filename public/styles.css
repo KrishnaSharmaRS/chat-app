@@ -43,6 +43,7 @@ button {
     background: #06c0b1;
     border: none;
     font-size: 16px;
+    font-weight: bold;
     transition: background .3s ease;
 }
 
@@ -94,7 +95,7 @@ button:disabled {
     height: 100vh;
     color: white;
     background: #333744;
-    width: 225px;
+    width: 180px;
     overflow-y: scroll
 }
 
@@ -148,14 +149,14 @@ button:disabled {
 .compose form {
     display: flex;
     flex-grow: 1;
-    margin-right: 16px;
+    margin-right: 2px;
 }
 
 .compose input {
     border: 1px solid #eeeeee;
     width: 100%;
     padding: 12px;
-    margin: 0 16px 0 0;
+    margin: 0 2px 0 0;
     flex-grow: 1;
 }
 
@@ -187,16 +188,19 @@ button:disabled {
 
 #send-message-button {
     background-color: #0a80e0;
+    padding: 3px;
+    margin: 2px;
+    font-size: 11px;
+}
+
+#location-button {
+    font-size: 11px;
+    padding: 4px;
+    margin: 2px;
 }
 
 #send-message-button:hover {
     background-color: #065fa8;
-}
-
-.button {
-    font-weight: bold;
-    border-radius: 8px;
-    color: white;
 }
 
 .message-box {
@@ -212,6 +216,13 @@ button:disabled {
     width: 100%;
     border-radius: 6px;
     text-overflow: hidden;
+}
+
+.button {
+    border-radius: 8px;
+    color: white;
+    font-size: 11px;
+    width: 90px;
 }
 
 .message-time {
